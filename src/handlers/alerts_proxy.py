@@ -22,26 +22,27 @@ class BasicAlert:
     def to_json(self):
         return {'alert_sevirity':self.alert_sevirity,
                 'alert_type':self.alert_type,
-                'alert_text':self.alert_type}
+                'alert_text':self.alert_text}
 
     def dispatch_to_db(self):
-        response = requests.post(url=f"{dataservice}/alert", json=self.to_json())
+        response = requests.post(url=f"{dataservice}/data/alert", json=self.to_json())
         return response
 
 
 class AlertView(FlaskView):
 
     def index(self):
-        #TODO: Data service get first 20 lines for display
         return "Hello"
     
-    @route('/train_model_started', methods=['POST'])
-    def train_model_started(self):
-        alert = BasicAlert(INFO,TRAIN_MODEL,'Train model started')
-        return alert.dispatch_to_db()
-    
+   
     @route('/train_model_complete', methods=['POST'])
     def train_model_started(self):
         model_metrics = request.get_json()
         alert = BasicAlert(INFO,TRAIN_MODEL,f'Train model completed {model_metrics}')
-        return alert.dispatch_to_db()
+        return alert.dispatch_to_db().text
+
+    @route('/train_model_begin', methods=['POST'])
+    def train_model_begin(self):
+        data = request.get_json()
+        alert = BasicAlert(INFO,TRAIN_MODEL,'Train model started')
+        return alert.dispatch_to_db().text

@@ -3,7 +3,6 @@ from handlers.alerts_proxy import AlertView
 
 app = Flask(__name__)
 
-
 AlertView.register(app, route_base='/alerts')
 
 if __name__ == '__main__':
