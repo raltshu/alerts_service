@@ -35,26 +35,26 @@ class AlertView(FlaskView):
         return "Hello"
     
    
-    @route('/train_model_complete', methods=['POST'])
-    def train_model_started(self):
+    @route('/train_model_finish', methods=['POST'])
+    def train_model_complete(self):
         model_metrics = request.get_json()
         alert = BasicAlert(INFO,TRAIN_MODEL,f'Train model completed {model_metrics}')
         return alert.dispatch_to_db().text
 
-    @route('/train_model_begin', methods=['POST'])
+    @route('/train_model_start', methods=['POST'])
     def train_model_begin(self):
         data = request.get_json()
         alert = BasicAlert(INFO,TRAIN_MODEL,'Train model started')
         return alert.dispatch_to_db().text
 
     @route('/calc_score_complete', methods=['POST'])
-    def train_model_started(self):
+    def model_score_complete(self):
         model_metrics = request.get_json()
         alert = BasicAlert(INFO,MODEL_SCORE,f'Model Score completed {model_metrics}')
         return alert.dispatch_to_db().text
 
     @route('/calc_score_begin', methods=['POST'])
-    def train_model_begin(self):
+    def model_score_start(self):
         data = request.get_json()
         alert = BasicAlert(INFO,MODEL_SCORE,'Begin model score calculation')
         return alert.dispatch_to_db().text
