@@ -69,7 +69,7 @@ class AlertView(FlaskView):
     def train_outsource_model_begin(self):
         data = request.get_json()
         rows_number = int(data['rows_number'])
-        alert = BasicAlert(INFO,TRAIN_OUTSOURCE_MODEL,f'Train outsource model started. Using {rows_number:,d}')
+        alert = BasicAlert(INFO,TRAIN_OUTSOURCE_MODEL,f'Train outsource model started. Using {rows_number:,d} rows')
         return alert.dispatch_to_db().text
 
     @route('/train_outsource_model_finish', methods=['POST'])
